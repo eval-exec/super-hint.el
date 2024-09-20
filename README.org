@@ -29,3 +29,9 @@
 ** Video description
 
 [[https://github.com/user-attachments/assets/a6ff75d7-c56d-4e33-b4f2-ebdc311848d8][video preview]]
+
+
+* Contributions Welcome!
+
+I recently started this GitHub repo and I’m eager to hear your thoughts. If you have any ideas, suggestions, or needs, please share them by opening an issue or submitting a pull request. Your feedback is highly valued!
+
