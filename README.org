@@ -22,12 +22,12 @@ Note: super-hint.el need https://github.com/dajva/rg.el
 
     (require 'rg)
     (require 'super-hint-rg)
-    (super-hint-enable-rg)
+    (super-hint-enable-rg) ;; then M-x rg-project to enjoy super-hint
 
     ;; (super-hint-disable-rg)
 
     (require 'super-hint-xref)
-    (super-hint-enable-xref)
+    (super-hint-enable-xref) ;; then M-x xref-find-references to enjoy super-hint
 
     ;; (super-hint-disable-xref)
 
