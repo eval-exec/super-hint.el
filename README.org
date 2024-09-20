@@ -1,1 +1,28 @@
-[[ https://github.com/user-attachments/assets/a6ff75d7-c56d-4e33-b4f2-ebdc311848d8 ][video preview]]
+* super-hint.el: Enhance rg and xref results with `which-function` hints.
+
+#+begin_src elisp
+(use-package super-hint
+  :load-path "~/Projects/github.com/eval-exec/super-hint.el/"
+
+  :config
+
+  (require 'super-hint-rg)
+  (super-hint-enable-rg)
+
+  ;; (super-hint-disable-rg)
+
+  (require 'super-hint-xref)
+  (super-hint-enable-xref)
+
+  ;; (super-hint-disable-xref)
+
+  )
+
+#+end_src
+
+* Description Image/Video
+
+![image](https://github.com/user-attachments/assets/a82b29da-f575-4bfc-9188-b5b20c43e622)
+
+
+[[https://github.com/user-attachments/assets/a6ff75d7-c56d-4e33-b4f2-ebdc311848d8][video preview]]
