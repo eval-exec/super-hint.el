@@ -22,7 +22,7 @@
 
 * Description Image/Video
 
-![image](https://github.com/user-attachments/assets/a82b29da-f575-4bfc-9188-b5b20c43e622)
+[[./super-hint.png]]
 
 
 [[https://github.com/user-attachments/assets/a6ff75d7-c56d-4e33-b4f2-ebdc311848d8][video preview]]
