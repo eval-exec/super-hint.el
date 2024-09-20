@@ -12,23 +12,26 @@
 
 * Configuration
 
+Note: super-hint.el need https://github.com/dajva/rg.el 
+
 #+begin_src elisp
-(use-package super-hint
-  :load-path "~/Projects/github.com/eval-exec/super-hint.el/"
+  (use-package super-hint
+    :load-path "~/Projects/github.com/eval-exec/super-hint.el/"
 
-  :config
+    :config
 
-  (require 'super-hint-rg)
-  (super-hint-enable-rg)
+    (require 'rg)
+    (require 'super-hint-rg)
+    (super-hint-enable-rg)
 
-  ;; (super-hint-disable-rg)
+    ;; (super-hint-disable-rg)
 
-  (require 'super-hint-xref)
-  (super-hint-enable-xref)
+    (require 'super-hint-xref)
+    (super-hint-enable-xref)
 
-  ;; (super-hint-disable-xref)
+    ;; (super-hint-disable-xref)
 
-  )
+    )
 
 #+end_src
 
