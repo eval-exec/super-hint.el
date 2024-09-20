@@ -1,4 +1,16 @@
-* super-hint.el: Enhance rg and xref results with `which-function` hints.
+* Enhance rg & xref results with which-function's hints.
+** Image description
+
+[[./super-hint.png]]
+
+(bottom window is xref's result buffer, on the left of xref window, it's super-hint.el's hints)
+
+** Video description
+
+[[https://github.com/user-attachments/assets/a6ff75d7-c56d-4e33-b4f2-ebdc311848d8][video preview]]
+
+
+* Configuration
 
 #+begin_src elisp
 (use-package super-hint
@@ -19,16 +31,6 @@
   )
 
 #+end_src
-
-* Description Image/Video
-
-** Image description
-
-[[./super-hint.png]]
-
-** Video description
-
-[[https://github.com/user-attachments/assets/a6ff75d7-c56d-4e33-b4f2-ebdc311848d8][video preview]]
 
 
 * Contributions Welcome!
