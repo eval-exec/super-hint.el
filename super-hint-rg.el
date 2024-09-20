@@ -4,39 +4,12 @@
 (require 'rg)
 
 (defun super-hint--shorten-string (str)
-  (if (> (length str) 50)
+  (if (> (length str) super-hint-hint-width)
 	  (let ((start (substring str 0 10))
             (end (substring str (- (length str) 39))))
         (concat start "…" end))
     str))
 
-(defun super-hint-colorful(str)
-  (let* ((str (or str ""))
-		 (dot-pos (cl-search "." str)))
-	(if dot-pos
-		(progn
-		  (put-text-property 0 dot-pos 'face 'font-lock-type-face str)
-		  (put-text-property (1+ dot-pos) (length str) 'face 'font-lock-property-name-face str)
-		  )
-	  (put-text-property 0 (length str) 'face 'font-lock-type-face str)
-	  )
-	(let ((start 0))
-	  (while (string-match "[<>]" str start)
-		(put-text-property (match-beginning 0) (match-end 0) 'face 'font-lock-punctuation-face str)
-		(setq start (match-end 0))))
-	(let ((start 0))
-	  (while (string-match "\\bfor\\b" str start)
-		(put-text-property (match-beginning 0) (match-end 0) 'face 'font-lock-keyword-face str)
-		(setq start (match-end 0))))
-	
-
-	(format "%-50s%s"
-			(super-hint--shorten-string str)
-			(propertize
-			 "│"
-			 'face 'font-lock-variable-use-face))
-	)
-  )
 
 (defun super-hint--rg-buffer()
   (interactive)
@@ -58,7 +31,7 @@
 			;; (message "not get msg %s" (thing-at-point 'line))
 			)))
 	;; (message "msg %s, function_name got: %s"  msg function_name)
-	(let* ((text (super-hint-colorful function_name))
+	(let* ((text (funcall super-hint-color-function function_name))
 		   (ov (make-overlay (line-beginning-position)
 							 (1+ (line-beginning-position))
 							 nil
@@ -101,6 +74,13 @@
   (add-to-list 'compilation-finish-functions #'super-hint--rg-hint-all nil))
 
 
-(add-hook 'rg-mode-hook #'super-hint-setup)
+(defun super-hint-enable-rg()
+  (interactive)
+  (add-hook 'rg-mode-hook #'super-hint-setup))
+
+(defun super-hint-disable-rg()
+  (interactive)
+  (remove-hook 'rg-mode-hook #'super-hint-setup)
+  )
 
 (provide 'super-hint-rg)

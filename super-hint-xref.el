@@ -16,7 +16,7 @@
 				  (super-hint-which-function file line col)))))))
 
 	;; got function_name, may be nil
-	(let* ((text (super-hint-colorful function_name))
+	(let* ((text (funcall super-hint-color-function function_name))
 		   (ov (make-overlay (line-beginning-position)
 							 (1+ (line-beginning-position))
 							 nil t)))
@@ -43,6 +43,14 @@
 (defun super-hint--xref-hint-after-update()
   (super-hint--xref-hint-all))
 
-(add-hook 'xref-after-update-hook #'super-hint--xref-hint-after-update)
+
+(defun super-hint-enable-xref()
+  (interactive)
+  (add-hook 'xref-after-update-hook #'super-hint--xref-hint-after-update))
+
+(defun super-hint-disable-xref()
+  (interactive)
+  (remove-hook 'xref-after-update-hook #'super-hint--xref-hint-after-update)
+  )
 
 (provide 'super-hint-xref)
