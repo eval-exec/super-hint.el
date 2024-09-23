@@ -74,10 +74,12 @@
   (add-to-list 'compilation-finish-functions #'super-hint--rg-hint-all nil))
 
 
+;;;###autoload
 (defun super-hint-enable-rg()
   (interactive)
   (add-hook 'rg-mode-hook #'super-hint-setup))
 
+;;;###autoload
 (defun super-hint-disable-rg()
   (interactive)
   (remove-hook 'rg-mode-hook #'super-hint-setup)
