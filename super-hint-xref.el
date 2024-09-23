@@ -44,10 +44,12 @@
   (super-hint--xref-hint-all))
 
 
+;;;###autoload
 (defun super-hint-enable-xref()
   (interactive)
   (add-hook 'xref-after-update-hook #'super-hint--xref-hint-after-update))
 
+;;;###autoload
 (defun super-hint-disable-xref()
   (interactive)
   (remove-hook 'xref-after-update-hook #'super-hint--xref-hint-after-update)
