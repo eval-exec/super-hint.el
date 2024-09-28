@@ -27,12 +27,7 @@
 (defun super-hint--xref-hint-all()
   (interactive)
   (setq-local scroll-margin 1)
-  (when (memq this-command
-			  '(xref-find-references
-				xref-find-definition-or-reference
-				lsp-find-implementation
-				xref-revert-buffer
-				exec/lsp-toggle-filter-test))
+  (when (derived-mode-p 'xref--xref-buffer-mode)
 	(with-current-buffer (current-buffer)
 	  (goto-char (point-min))
 	  (while (not (eobp))
