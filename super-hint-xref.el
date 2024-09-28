@@ -1,5 +1,6 @@
 ;; -*- lexical-binding: t; -*-
 
+(require 'super-hint)
 (require 'xref)
 
 (defcustom super-hint-xref-lighter " SH-xref"
