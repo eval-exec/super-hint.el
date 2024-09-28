@@ -2,6 +2,11 @@
 
 (require 'xref)
 
+(defcustom super-hint-xref-lighter " SH-xref"
+  "The minor mode lighter for `super-hint-rg-mode'."
+  :type 'string
+  :group 'super-hint)
+
 (defun super-hint--xref-hint()
   (interactive)
   ;; get xref file  and line, set col as 0
@@ -38,16 +43,14 @@
 (defun super-hint--xref-hint-after-update()
   (super-hint--xref-hint-all))
 
-
 ;;;###autoload
-(defun super-hint-enable-xref()
-  (interactive)
-  (add-hook 'xref-after-update-hook #'super-hint--xref-hint-after-update))
+(define-minor-mode super-hint-xref-mode
+  "Global minor mode to enable/disable `super-hint' in `xref' buffers."
+  :global t
+  :lighter super-hint-xref-lighter
+  (if super-hint-xref-mode
+      (add-hook 'xref-after-update-hook #'super-hint--xref-hint-after-update)
+    (remove-hook 'xref-after-update-hook #'super-hint--xref-hint-after-update)))
 
-;;;###autoload
-(defun super-hint-disable-xref()
-  (interactive)
-  (remove-hook 'xref-after-update-hook #'super-hint--xref-hint-after-update)
-  )
 
 (provide 'super-hint-xref)
