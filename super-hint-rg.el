@@ -3,6 +3,11 @@
 (require 'super-hint)
 (require 'rg)
 
+(defcustom super-hint-rg-lighter " SH-RG"
+  "The minor mode lighter for `super-hint-rg-mode'."
+  :type 'string
+  :group 'super-hint)
+
 (defun super-hint--shorten-string (str)
   (if (> (length str) super-hint-hint-width)
 	  (let ((start (substring str 0 10))
@@ -73,16 +78,13 @@
 (defun super-hint-setup(&rest args)
   (add-to-list 'compilation-finish-functions #'super-hint--rg-hint-all nil))
 
-
 ;;;###autoload
-(defun super-hint-enable-rg()
-  (interactive)
-  (add-hook 'rg-mode-hook #'super-hint-setup))
-
-;;;###autoload
-(defun super-hint-disable-rg()
-  (interactive)
-  (remove-hook 'rg-mode-hook #'super-hint-setup)
-  )
+(define-minor-mode super-hint-rg-mode
+  "Global minor mode to enable/disable `super-hint' in `rg' buffers."
+  :global t
+  :lighter super-hint-rg-lighter
+  (if super-hint-rg-mode
+      (add-hook 'rg-mode-hook #'super-hint-setup)
+    (remove-hook 'rg-mode-hook #'super-hint-setup)))
 
 (provide 'super-hint-rg)
