@@ -10,9 +10,9 @@
 
 (defun super-hint--shorten-string (str)
   (if (> (length str) super-hint-hint-width)
-	  (let ((start (substring str 0 10))
-            (end (substring str (- (length str) 39))))
-        (concat start "…" end))
+	(let ((start (substring str 0 10))
+           (end (substring str (- (length str) 39))))
+      (concat start "…" end))
     str))
 
 
@@ -20,27 +20,27 @@
   (interactive)
   (goto-char (line-beginning-position))
   (let* ((get-msg-fn (lambda() (get-text-property (point) 'compilation-message)))
-		 (msg (or
-			   (funcall get-msg-fn)
-			   (progn
-				 (sit-for 0.0)
-				 (funcall get-msg-fn))))
-		 (function_name
-		  (if msg
+		  (msg (or
+			     (funcall get-msg-fn)
+			     (progn
+				   (sit-for 0.0)
+				   (funcall get-msg-fn))))
+		  (function_name
+		    (if msg
 			  (let* ((loc (compilation--message->loc msg))
-					 (file (caar (compilation--loc->file-struct loc)))
-					 (line (compilation--loc->line loc))
-					 (col (compilation--loc->col loc)))
+					  (file (caar (compilation--loc->file-struct loc)))
+					  (line (compilation--loc->line loc))
+					  (col (compilation--loc->col loc)))
 				(super-hint-which-function file line col))
-			nil
-			;; (message "not get msg %s" (thing-at-point 'line))
-			)))
+			  nil
+			  ;; (message "not get msg %s" (thing-at-point 'line))
+			  )))
 	;; (message "msg %s, function_name got: %s"  msg function_name)
 	(let* ((text (funcall super-hint-color-function function_name))
-		   (ov (make-overlay (line-beginning-position)
-							 (1+ (line-beginning-position))
-							 nil
-							 t)))
+		    (ov (make-overlay (line-beginning-position)
+				  (1+ (line-beginning-position))
+				  nil
+				  t)))
 	  (overlay-put ov 'before-string text)
 	  (overlay-put ov 'evaporate t))))
 
@@ -71,7 +71,7 @@
 
   (unless exec/which-function-current-buffer-already-exist
 	(if exec/which-function-last-buffer-name
-		(kill-buffer (find-file-noselect exec/which-function-last-buffer-name))))
+	  (kill-buffer (find-file-noselect exec/which-function-last-buffer-name))))
   (setq-local exec/which-function-current-buffer-already-exist nil)
   (setq-local exec/which-function-last-buffer-name ""))
 
@@ -84,7 +84,7 @@
   :global t
   :lighter super-hint-rg-lighter
   (if super-hint-rg-mode
-      (add-hook 'rg-mode-hook #'super-hint-setup)
+    (add-hook 'rg-mode-hook #'super-hint-setup)
     (remove-hook 'rg-mode-hook #'super-hint-setup)))
 
 (provide 'super-hint-rg)
