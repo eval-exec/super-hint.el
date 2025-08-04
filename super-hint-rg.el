@@ -18,6 +18,7 @@
 
 (defun super-hint--rg-buffer()
   (interactive)
+  (jit-lock-fontify-now)
   (goto-char (line-beginning-position))
   (let* ((get-msg-fn (lambda() (get-text-property (point) 'compilation-message)))
 		  (msg (or
@@ -27,15 +28,17 @@
 				   (funcall get-msg-fn))))
 		  (function_name
 		    (if msg
-			  (let* ((loc (compilation--message->loc msg))
-					  (file (caar (compilation--loc->file-struct loc)))
-					  (line (compilation--loc->line loc))
-					  (col (compilation--loc->col loc)))
-				(super-hint-which-function file line col))
+			  (progn
+                (let* ((loc (compilation--message->loc msg))
+					    (file (caar (compilation--loc->file-struct loc)))
+					    (line (compilation--loc->line loc))
+					    (col (compilation--loc->col loc)))
+				  (super-hint-which-function file line col))
+                )
 			  nil
 			  ;; (message "not get msg %s" (thing-at-point 'line))
 			  )))
-	;; (message "msg %s, function_name got: %s"  msg function_name)
+	;; (message "%s: msg %s, function_name got: %s" (thing-at-point 'sentence )  msg function_name)
 	(let* ((text (funcall super-hint-color-function function_name))
 		    (ov (make-overlay (line-beginning-position)
 				  (1+ (line-beginning-position))
@@ -76,7 +79,7 @@
   (setq-local exec/which-function-last-buffer-name ""))
 
 (defun super-hint-setup(&rest args)
-  (add-to-list 'compilation-finish-functions #'super-hint--rg-hint-all nil))
+  (add-to-list 'compilation-finish-functions #'super-hint--rg-hint-all t))
 
 ;;;###autoload
 (define-minor-mode super-hint-rg-mode
@@ -84,7 +87,7 @@
   :global t
   :lighter super-hint-rg-lighter
   (if super-hint-rg-mode
-    (add-hook 'rg-mode-hook #'super-hint-setup)
-    (remove-hook 'rg-mode-hook #'super-hint-setup)))
+    (add-hook 'rg-finish-functions #'super-hint--rg-hint-all t)
+    (remove-hook 'rg-finish-functions #'super-hint--rg-hint-all t)))
 
 (provide 'super-hint-rg)
