@@ -12,20 +12,20 @@
   (interactive)
   ;; get xref file  and line, set col as 0
   (let* ((entry (xref--item-at-point))
-		 (function_name
-		  (when entry
-			(let ((location (xref-item-location entry)))
-			  (when (xref-file-location-p location)
-				(let ((file (xref-file-location-file location))
-					  (line (xref-file-location-line location))
-					  (col (xref-file-location-column location)))
-				  (super-hint-which-function file line col)))))))
+		  (function_name
+		    (when entry
+			  (let ((location (xref-item-location entry)))
+			    (when (xref-file-location-p location)
+				  (let ((file (xref-file-location-file location))
+					     (line (xref-file-location-line location))
+					     (col (xref-file-location-column location)))
+				    (super-hint-which-function file line col)))))))
 
 	;; got function_name, may be nil
 	(let* ((text (funcall super-hint-color-function function_name))
-		   (ov (make-overlay (line-beginning-position)
-							 (1+ (line-beginning-position))
-							 nil t)))
+		    (ov (make-overlay (line-beginning-position)
+				  (1+ (line-beginning-position))
+				  nil t)))
 	  (overlay-put ov 'before-string text)
 	  (overlay-put ov 'evaporate t))))
 
@@ -50,7 +50,7 @@
   :global t
   :lighter super-hint-xref-lighter
   (if super-hint-xref-mode
-      (add-hook 'xref-after-update-hook #'super-hint--xref-hint-after-update)
+    (add-hook 'xref-after-update-hook #'super-hint--xref-hint-after-update)
     (remove-hook 'xref-after-update-hook #'super-hint--xref-hint-after-update)))
 
 

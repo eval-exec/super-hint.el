@@ -22,7 +22,7 @@
   (unless (eq file exec/which-function-last-buffer-name)
 	(unless exec/which-function-current-buffer-already-exist
 	  (if exec/which-function-last-buffer-name
-		  (bury-buffer (find-file-noselect exec/which-function-last-buffer-name))))
+		(bury-buffer (find-file-noselect exec/which-function-last-buffer-name))))
 	(setq-local exec/which-function-current-buffer-already-exist (get-file-buffer file))
 	(setq-local exec/which-function-last-buffer-name file))
   (let* ((buffer (find-file-noselect file)))
@@ -34,13 +34,13 @@
 
 (defun super-hint-colorful(str)
   (let* ((str (or str ""))
-		 (dot-pos (cl-search "." str)))
+		  (dot-pos (cl-search "." str)))
 
 	;; apply color to hint like: "AfterContext.is_switch"
 	(if dot-pos
-		(progn
-		  (put-text-property 0 dot-pos 'face 'font-lock-type-face str)
-		  (put-text-property (1+ dot-pos) (length str) 'face 'font-lock-property-name-face str))
+	  (progn
+		(put-text-property 0 dot-pos 'face 'font-lock-type-face str)
+		(put-text-property (1+ dot-pos) (length str) 'face 'font-lock-property-name-face str))
 	  (put-text-property 0 (length str) 'face 'font-lock-type-face str))
 
 	;; apply color to hint like:  "ParseResult<T>"
@@ -55,11 +55,15 @@
 		(put-text-property (match-beginning 0) (match-end 0) 'face 'font-lock-keyword-face str)
 		(setq start (match-end 0))))
 
-	(format (concat "%-" (number-to-string super-hint-hint-width) "s%s")
-			(super-hint--shorten-string str)
-			(propertize
-			 "│"
-			 'face 'font-lock-variable-use-face))))
+    (let* ((str (super-hint--shorten-string str))
+            (str (replace-regexp-in-string "\n" "" str)))
+	  (format
+        (concat "%-" (number-to-string super-hint-hint-width) "s%s")
+        str
+	    (propertize
+		  "│"
+		  'face 'font-lock-variable-use-face))))
+  )
 
 
 (provide 'super-hint)
