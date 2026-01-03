@@ -56,12 +56,7 @@
 	  (string-match-p "rg finished" line))))
 
 (defun super-hint--rg-hint-all (&rest args)
-  (interactive)
-
   (goto-char (point-min))
-
-
-
   (setq-local scroll-margin 1)
   (with-current-buffer (rg-buffer-name)
 	(let ((start-time (current-time)))
@@ -79,15 +74,21 @@
   (setq-local exec/which-function-last-buffer-name ""))
 
 (defun super-hint-setup(&rest args)
-  (add-to-list 'compilation-finish-functions #'super-hint--rg-hint-all t))
+  )
 
 ;;;###autoload
 (define-minor-mode super-hint-rg-mode
-  "Global minor mode to enable/disable `super-hint' in `rg' buffers."
+  "Global minor mode to enable/disable `super-hint’ in `rg’ buffers."
   :global t
   :lighter super-hint-rg-lighter
   (if super-hint-rg-mode
-    (add-hook 'rg-finish-functions #'super-hint--rg-hint-all t)
-    (remove-hook 'rg-finish-functions #'super-hint--rg-hint-all t)))
+    (progn
+      ;; Add our hint function to both hooks
+      (add-hook 'rg-finish-functions #'super-hint--rg-hint-all)
+      (add-hook 'compilation-finish-functions #'super-hint--rg-hint-all))
+    (progn
+      ;; Remove from both hooks when disabling
+      (remove-hook 'rg-finish-functions #'super-hint--rg-hint-all)
+      (remove-hook 'compilation-finish-functions #'super-hint--rg-hint-all))))
 
 (provide 'super-hint-rg)
